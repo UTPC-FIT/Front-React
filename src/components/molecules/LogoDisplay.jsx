@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Image from '../atoms/Image';
+import Image from '@atoms/Image';
 
 const LogoDisplay = ({
     src,

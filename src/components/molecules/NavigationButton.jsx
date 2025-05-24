@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import ButtonWithIcon from './ButtonWithIcon';
+import ButtonWithIcon from '@molecules/ButtonWithIcon';
 
 const NavigationButton = ({
     to,

@@ -1,10 +1,10 @@
 // src/routes/index.js
 import { lazy } from 'react'
-import Protected from './Protected'
+import Protected from '@routes/Protected'
 
-const HomePage = lazy(() => import('../pages/Home/HomePage'))
-const NotFoundPage = lazy(() => import('../pages/NotFound/NotFoundPage'))
-const InscriptionPage = lazy(() => import('../pages/Inscription/InscriptionPage'))
+const HomePage = lazy(() => import('@pages/Home/HomePage'))
+const NotFoundPage = lazy(() => import('@pages/NotFound/NotFoundPage'))
+const InscriptionPage = lazy(() => import('@pages/Inscription/InscriptionPage'))
 
 export const routes = [
     { path: '/', Component: HomePage },

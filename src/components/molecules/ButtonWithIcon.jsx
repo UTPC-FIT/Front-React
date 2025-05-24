@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '../atoms/Button';
-import Icon from '../atoms/Icon';
+import Button from '@atoms/Button';
+import Icon from '@atoms/Icon';
 
 const ButtonWithIcon = ({
     children,

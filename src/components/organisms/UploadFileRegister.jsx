@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FaDownload, FaFileArrowUp } from 'react-icons/fa6';
 import { TbFileSmile } from 'react-icons/tb';
-import FileUploadField from '../molecules/FileUploadField';
-import DownloadLink from '../molecules/DownloadLink';
+import FileUploadField from '@molecules/FileUploadField';
+import DownloadLink from '@molecules/DownloadLink';
 
 const UploadFileRegister = ({
     age = 0,

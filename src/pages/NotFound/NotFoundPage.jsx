@@ -1,9 +1,9 @@
 import React from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
-import logoUPTC from '../../assets/images/logo_uptc.png';
-import LogoDisplay from '../../components/molecules/LogoDisplay';
-import ErrorDisplay from '../../components/molecules/ErrorDisplay';
-import NavigationButton from '../../components/molecules/NavigationButton';
+import logoUPTC from '@assets/images/logo_uptc.png';
+import LogoDisplay from '@components/molecules/LogoDisplay';
+import ErrorDisplay from '@components/molecules/ErrorDisplay';
+import NavigationButton from '@components/molecules/NavigationButton';
 
 const NotFoundPage = () => {
     return (

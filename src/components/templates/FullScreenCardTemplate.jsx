@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 
 const FullScreenCardTemplate = ({
     children,
-    backgroundColor = 'bg-neutral-gray-light',
+    backgroundScreenColor = '[var(--color-background-dark)]',
+    backgroundColor = '[var(--color-background-light)]',
     className = '',
     maxWidth = 'max-w-5xl',
     minHeight = 'min-h-[545px]',
     fullHeightOnMobile = true
 }) => {
     return (
-        <div className="min-h-screen w-full flex items-center justify-center p-4 bg-neutral-white">
+        <div className={`
+            min-h-screen w-full flex items-center justify-center p-8
+            bg-${backgroundScreenColor}
+            `}>
             <div className={`
                 w-full ${maxWidth} ${minHeight} flex justify-between rounded-lg shadow-md
-                ${backgroundColor} ${className}
+                bg-${backgroundColor} ${className}
                 md:w-[80%] lg:w-[70%] xl:w-[60%]
                 ${fullHeightOnMobile ? 'sm:h-auto h-screen sm:rounded-lg rounded-none' : ''}
                 transition-all duration-300

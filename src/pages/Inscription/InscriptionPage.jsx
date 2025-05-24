@@ -4,7 +4,7 @@ import { FaDownload, FaFileArrowUp } from 'react-icons/fa6';
 import { TbFileSmile } from 'react-icons/tb';
 
 import logoUPTC from '../../assets/images/logo_uptc.png';
-import FullScreenCardTemplate from '../../components/templates/FullScreenCardTemplate';
+import FullScreenCardTemplate from '@templates/FullScreenCardTemplate';
 import LogoDisplay from '../../components/molecules/LogoDisplay';
 import Text from '../../components/atoms/Text';
 import ButtonWithIcon from '../../components/molecules/ButtonWithIcon';
