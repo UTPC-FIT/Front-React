@@ -9,29 +9,38 @@ const Button = ({
     disabled = false,
     className = '',
     onClick,
+    justify = 'center',
 }) => {
-    const baseStyles = 'rounded-lg font-semibold transition-all duration-200 focus:outline-none';
+    const baseStyles = 'font-semibold rounded-lg transition-all duration-200 flex items-center';
 
     const variants = {
-        primary: 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800',
-        secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 active:bg-gray-400',
-        danger: 'bg-red-600 text-white hover:bg-red-700 active:bg-red-800',
-        success: 'bg-green-600 text-white hover:bg-green-700 active:bg-green-800',
-        outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50',
+        primary: 'bg-[var(--color-primary-medium)] hover:bg-[var(--color-primary-light)] text-[var(--color-neutral-gray-dark)]',
+        secondary: 'bg-[var(--color-neutral-gray-light)] text-[var(--color-neutral-gray-dark)] hover:bg-[var(--color-neutral-gray-medium)]',
+        danger: 'bg-[var(--color-accent-red)] hover:bg-[var(--color-accent-red-light)] text-[var(--color-neutral-white)]',
+        success: 'bg-[var(--color-accent-green)] hover:bg-[var(--color-accent-green-light)] text-[var(--color-neutral-white)]',
+        outline: 'border-2 border-[var(--color-primary-medium)] text-[var(--color-primary-medium)] hover:bg-[var(--color-primary-light)]',
     };
 
     const sizes = {
-        small: 'px-3 py-1 text-sm',
-        medium: 'px-4 py-2 text-base',
-        large: 'px-6 py-3 text-lg',
+        small: 'px-4 py-1 text-sm h-8',
+        medium: 'px-6 py-2 text-base h-12',
+        large: 'px-8 py-3 text-lg h-14',
     };
 
     const disabledStyles = disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer';
+    const justifyClass = `justify-${justify}`;
 
     return (
         <button
             type={type}
-            className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${disabledStyles} ${className}`}
+            className={`
+                ${baseStyles} 
+                ${variants[variant]} 
+                ${sizes[size]} 
+                ${justifyClass}
+                ${disabledStyles} 
+                ${className}
+            `}
             disabled={disabled}
             onClick={onClick}
         >
@@ -48,6 +57,7 @@ Button.propTypes = {
     disabled: PropTypes.bool,
     className: PropTypes.string,
     onClick: PropTypes.func,
+    justify: PropTypes.string,
 };
 
 export default Button;
