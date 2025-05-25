@@ -17,14 +17,14 @@ const DownloadLink = ({
     return (
         <LinkComponent
             {...linkProps}
-            className={`group flex items-center justify-start space-x-2 relative px-4 py-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-primary-medium hover:after:w-full after:transition-all after:duration-300 ${className}`}
+            className={`group flex items-center justify-start space-x-2 relative px-4 py-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[var(--color-primary-medium)] hover:after:w-full after:transition-all after:duration-300 ${className}`}
         >
             <Text color="default" className="font-semibold">
                 {text}
             </Text>
             <Icon
                 IconComponent={IconComponent}
-                className="h-6 w-6 text-primary group-hover:text-primary-medium"
+                className="h-6 w-6 text-[var(--color-primary)] group-hover:text-[var(--color-primary-medium)]"
                 size="medium"
             />
         </LinkComponent>

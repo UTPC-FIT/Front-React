@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { FaDownload, FaFileArrowUp } from 'react-icons/fa6';
-import { TbFileSmile } from 'react-icons/tb';
+import { FaDownload } from 'react-icons/fa6';
 import FileUploadField from '@molecules/FileUploadField';
 import DownloadLink from '@molecules/DownloadLink';
 
@@ -12,7 +11,13 @@ const UploadFileRegister = ({
     handleFileChange,
     errorMessage
 }) => {
+    const fileInputRef = useRef(null);
+
     if (age === 0) return null;
+
+    const handleClick = () => {
+        fileInputRef.current.click();
+    };
 
     if (age < 18) {
         return (
@@ -20,18 +25,20 @@ const UploadFileRegister = ({
                 id="parental-authorization"
                 name="parentalAuthorization"
                 label="Autorización de padre o madre (para menores de 18 años)"
-                IconComponent={TbFileSmile}
                 selectedFile={parentalAuthorization}
-                onChange={handleFileChange}
+                onChange={(e) => handleFileChange(e, 'parentalAuthorization')}
                 errorMessage={errorMessage}
-                maxSize="1 MB"
+                description="Soporte para archivos PDF (máx. 1 MB)"
+                required
+                onClick={handleClick}
+                inputRef={fileInputRef}
             />
         );
     }
 
     return (
         <>
-            <div className='w-full flex justify-start' style={{ gridColumn: "span 2" }}>
+            <div className='w-full flex justify-start mb-4' style={{ gridColumn: "span 2" }}>
                 <DownloadLink
                     href="https://drive.google.com/file/d/1vY3vnB_I79746xxRKkvVGl2rzcKigdoo/view"
                     text="Descarga el Consentimiento"
@@ -43,12 +50,14 @@ const UploadFileRegister = ({
             <FileUploadField
                 id="informed-consent"
                 name="informedConsent"
-                label=""
-                IconComponent={FaFileArrowUp}
                 selectedFile={informedConsent}
-                onChange={handleFileChange}
+                onChange={(e) => handleFileChange(e, 'informedConsent')}
                 errorMessage={errorMessage}
-                maxSize="1 MB"
+                description="Sube el consentimiento firmado (máx. 1 MB)"
+                required
+                onClick={handleClick}
+                inputRef={fileInputRef}
+                style={{ gridColumn: "span 2" }}
             />
         </>
     );

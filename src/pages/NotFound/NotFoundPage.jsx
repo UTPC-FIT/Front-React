@@ -25,6 +25,7 @@ const NotFoundPage = () => {
                     text="Volver al inicio"
                     IconComponent={FiArrowLeft}
                     iconPosition="left"
+                    className="mt-12"
                 />
             </div>
         </div>

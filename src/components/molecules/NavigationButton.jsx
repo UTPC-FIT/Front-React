@@ -11,15 +11,17 @@ const NavigationButton = ({
     variant = 'primary',
     size = 'large',
     className = '',
+    ...props
 }) => {
     return (
-        <div className={`mt-12 ${className}`}>
+        <div className={`${className}`}>
             <Link to={to} className="inline-block">
                 <ButtonWithIcon
                     variant={variant}
                     IconComponent={IconComponent}
                     iconPosition={iconPosition}
                     size={size}
+                    {...props}
                 >
                     {text}
                 </ButtonWithIcon>
