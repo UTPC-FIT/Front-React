@@ -2,6 +2,8 @@ import { useState } from 'react';
 import * as service from '@services/registrationService';
 import { useAuth } from '@hooks/useAuth';
 
+import { toast } from 'react-toastify';
+
 export function useRegistration() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -14,7 +16,9 @@ export function useRegistration() {
      */
     const register = async (formData) => {
         if (!id_student || !username) {
-            throw new Error('Usuario no autenticado');
+            const message = 'No se ha podido obtener el id del estudiante o el nombre de usuario';
+            toast.error(message)
+            throw new Error(message);
         }
 
         const registrationData = {
@@ -28,9 +32,15 @@ export function useRegistration() {
         try {
             const result = await service.registerStudent(registrationData);
             setData(result);
+            toast.success('Registro exitoso 🥳');
             return result;
         } catch (err) {
-            setError(err.response?.data || err.message);
+            if (err.name === 'ApiError') {
+                // Muestra el mensaje que vino del servidor
+                toast.error(err.message);
+            } else {
+                toast.error('Ocurrió un error inesperado');
+            }
             throw err;
         } finally {
             setLoading(false);

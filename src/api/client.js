@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const apiClient = axios.create({
-    baseURL: import.meta.env.VITE_INSCRIPTION_URL, // p.ej. "https://miapi.com"
+    baseURL: import.meta.env.VITE_INSCRIPTION_URL,
     headers: { 'Content-Type': 'application/json' },
     timeout: 10000,
 });
