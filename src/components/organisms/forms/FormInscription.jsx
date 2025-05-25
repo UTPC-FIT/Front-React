@@ -7,8 +7,11 @@ import InputWithLabel from '@molecules/InputWithLabel';
 import InputSelection from '@molecules/InputSelection';
 import ButtonWithIcon from '@molecules/ButtonWithIcon';
 
+import { useRegistration } from '@hooks/useRegistration';
+
 
 const FormInscription = ({ age = 20 }) => {
+    const { register, loading, error, data } = useRegistration();
     const [formData, setFormData] = useState({
         consent_document: null,
         parental_authorization: null,
@@ -52,7 +55,7 @@ const FormInscription = ({ age = 20 }) => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = {};
 
@@ -82,8 +85,15 @@ const FormInscription = ({ age = 20 }) => {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
-            // Form is valid, handle submission
             console.log('Form submitted:', formData);
+
+            e.preventDefault();
+            try {
+                const resp = await register(formData);
+                console.log('Registro OK:', resp);
+            } catch (err) {
+                console.error('Error al registrar:', err);
+            }
         }
     };
 

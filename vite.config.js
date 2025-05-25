@@ -22,6 +22,9 @@ export default defineConfig({
       '@store': '/src/lib/store',
       '@utils': '/src/utils',
       '@routes': '/src/routes',
+      '@api': '/src/api',
+      '@dtos': '/src/dtos',
+      '@services': '/src/services',
     },
   },
 })
