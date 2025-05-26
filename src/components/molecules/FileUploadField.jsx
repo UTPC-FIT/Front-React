@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TbFileSmile, TbFileAlert } from 'react-icons/tb';
+import Text from '@atoms/Text';
 
 const FileUploadField = ({
     id,
@@ -16,20 +17,20 @@ const FileUploadField = ({
     inputRef,
 }) => {
     const FileIcon = errorMessage ? TbFileAlert : TbFileSmile;
-    const iconColorClass = errorMessage ? 'text-red-500' : 'text-[var(--color-primary)]';
+    const iconColorClass = errorMessage ? 'text-[var(--color-accent-red)]' : 'text-[var(--color-primary)]';
 
     return (
         <div className="mb-6">
             {label && (
                 <label className="block text-gray-700 font-medium mb-2">
                     {label}
-                    {required && <span className="text-red-500 ml-1">*</span>}
+                    {required && <span className="text-[var(--color-accent-red)] ml-1">*</span>}
                 </label>
             )}
             <div
                 onClick={onClick}
                 className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
-                    ${errorMessage ? 'border-red-400 bg-red-50' : 'border-gray-300 hover:border-[var(--color-primary)] bg-gray-50 hover:bg-gray-100'}`}
+                    ${errorMessage ? 'border-[var(--color-accent-red-light)] bg-red-50' : 'border-gray-300 hover:border-[var(--color-primary)] bg-gray-50 hover:bg-gray-100'}`}
             >
                 <input
                     id={id}
@@ -57,7 +58,9 @@ const FileUploadField = ({
                 </div>
             </div>
             {errorMessage && (
-                <p className="mt-1 text-red-500 text-sm">{errorMessage}</p>
+                <Text className="mt-1" variant="caption" color="error" size="small">
+                    {errorMessage}
+                </Text>
             )}
         </div>
     );

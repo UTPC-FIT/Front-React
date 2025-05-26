@@ -78,7 +78,7 @@ const Input = ({
                 />
             </div>
             {error && (
-                <span className="text-xs text-accent-red mt-1">
+                <span className="text-xs text-[var(--color-accent-red)] mt-1">
                     {error}
                 </span>
             )}

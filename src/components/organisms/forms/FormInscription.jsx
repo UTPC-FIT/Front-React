@@ -91,7 +91,7 @@ const FormInscription = ({ age = 20 }) => {
             try {
                 const resp = await register(formData);
                 console.log('Registro OK:', resp);
-                // resetear el form o navegar
+
                 setFormData({
                     consent_document: null,
                     parental_authorization: null,

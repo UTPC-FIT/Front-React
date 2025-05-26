@@ -59,7 +59,7 @@ const InputSelection = ({
             )}
             <div className="relative">
                 {icon && (
-                    <div className={`absolute top-3 left-3 ${error ? 'text-red-500' : 'text-gray-600'}`}>
+                    <div className={`absolute top-3 left-3 ${error ? 'text-[var(--color-accent-red)]' : 'text-gray-600'}`}>
                         {icon}
                     </div>
                 )}
@@ -80,11 +80,11 @@ const InputSelection = ({
                     ))}
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                    <FiChevronDown className={`h-4 w-4 ${error ? 'text-red-500' : 'text-gray-600'}`} />
+                    <FiChevronDown className={`h-4 w-4 ${error ? 'text-[var(--color-accent-red)]' : 'text-gray-600'}`} />
                 </div>
             </div>
             {error && (
-                <span className="text-xs text-red-500 mt-1">
+                <span className="text-xs text-[var(--color-accent-red)] mt-1">
                     {error}
                 </span>
             )}

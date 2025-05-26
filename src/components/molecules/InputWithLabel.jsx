@@ -30,17 +30,6 @@ const InputWithLabel = ({
                     {...inputProps}
                 />
             </div>
-            {errors && Object.keys(errors).map((key) => (
-                errors[key] && (
-                    <Text
-                        key={key}
-                        variant="error"
-                        color="error"
-                    >
-                        {errors[key]}
-                    </Text>
-                )
-            ))}
         </>
     );
 };
