@@ -13,6 +13,7 @@
   --color-neutral-gray-light: hsl(0, 0%, 91%);
   --color-neutral-gray-medium: rgba(49, 49, 49, 0.72);
   --color-neutral-gray-dark: #373634;
+  --color-neutral-gray-blue: #2f2f2f;
 
   /* Background colors */
   --color-background-light: #f5f5f5;

@@ -8,11 +8,11 @@ const LogoDisplay = ({
     className = '',
 }) => {
     return (
-        <div className="mb-8">
+        <div>
             <Image
                 src={src}
                 alt={alt}
-                className={`h-24 mx-auto ${className}`}
+                className={`h-18 mx-auto ${className}`}
             />
         </div>
     );
