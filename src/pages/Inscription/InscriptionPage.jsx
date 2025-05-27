@@ -1,28 +1,23 @@
-import FullScreenCardTemplate from '@templates/FullScreenCardTemplate';
-import InscriptionHeader from '@organisms/headers/InscriptionHeader';
-import FormInscription from '@organisms/forms/FormInscription';
-
-import Text from '@atoms/Text';
+import React from 'react';
+import { useRequireAuth } from '@hooks/useRequireAuth';
+import InscriptionTemplate from '@templates/InscriptionTemplate';
 
 const InscriptionPage = () => {
+    const { user, loading, isAuthenticated } = useRequireAuth();
 
-    return (
-        <FullScreenCardTemplate>
-            <InscriptionHeader direction="right" />
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-primary)]"></div>
+            </div>
+        );
+    }
 
-            <Text
-                variant="error"
-                color="error"
-                className="my-6"
-            >
-                Los campos con asterisco (*) son obligatorios.
-            </Text>
+    if (!isAuthenticated) {
+        return null;
+    }
 
-            <FormInscription />
-
-        </FullScreenCardTemplate>
-    )
-
-}
+    return <InscriptionTemplate user={user} />;
+};
 
 export default InscriptionPage;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as service from '@services/registrationService';
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@context/AuthContext';
 
 import { toast } from 'react-toastify';
 

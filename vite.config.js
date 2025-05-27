@@ -20,6 +20,7 @@ export default defineConfig({
       '@assets': '/src/assets',
       '@hooks': '/src/lib/hooks',
       '@store': '/src/lib/store',
+      '@context': '/src/lib/context',
       '@utils': '/src/utils',
       '@routes': '/src/routes',
       '@api': '/src/api',
