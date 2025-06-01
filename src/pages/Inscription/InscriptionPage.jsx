@@ -8,6 +8,7 @@ import { getToken } from '@services/authService';
 const InscriptionPage = () => {
     const { user, loading, isAuthenticated } = useRequireAuth();
 
+    console.log(user)
     console.log(getToken());
 
     if (loading) {
@@ -16,10 +17,6 @@ const InscriptionPage = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-primary)]"></div>
             </div>
         );
-    }
-
-    if (!isAuthenticated) {
-        return null;
     }
 
     return <InscriptionTemplate />;

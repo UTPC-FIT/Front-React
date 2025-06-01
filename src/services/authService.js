@@ -66,6 +66,10 @@ export const getUserInfo = () => {
             username: keycloakInstance.tokenParsed?.preferred_username,
             email: keycloakInstance.tokenParsed?.email,
             roles: keycloakInstance.tokenParsed?.realm_access?.roles || [],
+            firstName: keycloakInstance.tokenParsed?.given_name || '',
+            lastName: keycloakInstance.tokenParsed?.family_name || '',
+            code: keycloakInstance.tokenParsed?.code || '',
+            status: keycloakInstance.tokenParsed?.status || '',
         };
         return userInfo;
     }

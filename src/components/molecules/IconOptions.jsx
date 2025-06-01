@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@atoms/Icon';
 
-const IconOptions = ({ IconComponent, options = [], variant = 'default' }) => {
+const IconOptions = ({ IconComponent, options = [], variant = 'default', ...props }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -51,7 +51,7 @@ const IconOptions = ({ IconComponent, options = [], variant = 'default' }) => {
                     aria-expanded={isOpen}
                     aria-haspopup="true"
                 >
-                    <Icon IconComponent={IconComponent} size="medium" color="gray-700" className="cursor-pointer" />
+                    <Icon IconComponent={IconComponent} size="medium" color="gray-700" className="cursor-pointer" {...props} />
                 </button>
             </div>
 

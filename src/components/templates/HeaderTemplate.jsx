@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import { useAuth } from '@context/AuthContext';
+
 import ButtonHelp from '@molecules/buttons/ButtonHelp';
 import ButtonBurger from '@molecules/buttons/ButtonBurger';
 import FooterMobile from '@molecules/footers/Footer';
+import IconOptions from '@molecules/IconOptions';
+
 import logoUptc from '@assets/images/logoUPTC24.svg';
+import { CgProfile } from "react-icons/cg";
 
 const HeaderTemplate = ({ menu }) => {
+    const { logout } = useAuth();
     const [showMenu, setShowMenu] = useState(false);
 
     return (
         <header
-            className="flex h-[72px] justify-between items-center p-4 relative"
-            style={{
-                backgroundColor: 'var(--color-neutral-gray-dark)',
-                opacity: 0.8,
-            }}
+            className="flex h-[72px] justify-between items-center p-4 relative bg-[var(--color-neutral-gray-dark)]"
         >
             {/* Contenedor del Logo con posicionamiento para que sobresalga */}
             <div className="flex mt-12 mr-8 items-center h-full md:w-1/4">
@@ -95,10 +98,17 @@ const HeaderTemplate = ({ menu }) => {
                     ))}
             </ul>
 
-            {/* Botones de Ayuda y Usuario */}
             <div className="flex items-center space-x-4">
                 <ButtonHelp />
-                {/* <UserButton /> */}
+                <IconOptions
+                    IconComponent={CgProfile}
+                    className="text-white font-bold cursor-pointer"
+                    options={[
+                        { text: 'Perfil', onClick: () => console.log('Perfil clicked') },
+                        { text: 'Configuración', onClick: () => console.log('Configuración clicked') },
+                        { text: 'Cerrar sesión', onClick: () => logout() },
+                    ]}
+                />
             </div>
         </header>
     );
