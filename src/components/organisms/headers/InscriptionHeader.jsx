@@ -7,8 +7,11 @@ import logoUptc from "@assets/images/logo_uptc.png"
 import { FiArrowLeft } from "react-icons/fi";
 import { FiArrowRight } from "react-icons/fi";
 
+import { useAuth } from "@context/AuthContext";
+
 const InscriptionHeader = ({ direction = "left" }) => {
     const isReversed = direction === "right";
+    const { logout } = useAuth();
 
     return (
         <header className={`flex items-start ${isReversed ? 'flex-row-reverse' : ''} justify-between w-full`}>
@@ -21,10 +24,11 @@ const InscriptionHeader = ({ direction = "left" }) => {
                     ¿Volver al inicio de sesión?
                 </Text>
                 <NavigationButton
-                    to="/"
+                    to="/login"
                     text="Volver"
                     size="medium"
                     className="py-2 px-8"
+                    onClick={logout}
                     IconComponent={isReversed ? FiArrowRight : FiArrowLeft}
                     iconPosition={isReversed ? "right" : "left"}
                 />
