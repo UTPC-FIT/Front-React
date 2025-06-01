@@ -1,25 +1,27 @@
-import Text from '@atoms/Text'
+import Text from '@atoms/Text';
+import Search from '@organisms/Search';
+import IconOptions from '@molecules/IconOptions';
+import { FaFilter } from 'react-icons/fa';
 
-import Search from '@organisms/Search'
-import IconOptions from '@molecules/IconOptions'
-
-import { FaFilter } from "react-icons/fa";
-
-const TableStudentsHeader = () => {
+const TableStudentsHeader = ({ onSearch, onFilterChange, currentFilter }) => { // currentFilter es opcional
     const filterOptions = [
         {
             text: "Activos",
-            onClick: () => { }
+            onClick: () => onFilterChange('active'),
         },
         {
             text: "Inactivos",
-            onClick: () => { }
+            onClick: () => onFilterChange('inactive'),
         },
         {
             text: "Pendientes",
-            onClick: () => { }
+            onClick: () => onFilterChange('pending'),
         },
-    ]
+        {
+            text: "Todos", // Opción para limpiar el filtro
+            onClick: () => onFilterChange(''),
+        },
+    ];
 
     return (
         <div className='flex items-center justify-between'>
@@ -30,7 +32,8 @@ const TableStudentsHeader = () => {
             </Text>
 
             <div className='flex items-center justify-center gap-2'>
-                <Search />
+                {/* Pasa la función onSearch al componente Search */}
+                <Search onSearch={onSearch} />
                 <IconOptions
                     IconComponent={FaFilter}
                     options={filterOptions}
@@ -38,7 +41,7 @@ const TableStudentsHeader = () => {
                 />
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default TableStudentsHeader;

@@ -26,6 +26,7 @@ export default defineConfig({
       '@api': '/src/api',
       '@dtos': '/src/dtos',
       '@services': '/src/services',
+      '@styles': '/src/styles',
     },
   },
 })

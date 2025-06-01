@@ -5,7 +5,15 @@ import LogoDisplay from '@components/molecules/LogoDisplay';
 import ErrorDisplay from '@components/molecules/ErrorDisplay';
 import NavigationButton from '@components/molecules/NavigationButton';
 
+import { useNavigate, useLocation } from 'react-router-dom';
+
+
 const NotFoundPage = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-neutral-white p-4">
             <div className="max-w-2xl w-full text-center space-y-8">
@@ -21,7 +29,7 @@ const NotFoundPage = () => {
 
                 {/* Navigation */}
                 <NavigationButton
-                    to="/"
+                    to={from}
                     text="Volver al inicio"
                     IconComponent={FiArrowLeft}
                     iconPosition="left"

@@ -9,20 +9,22 @@ import Text from '@atoms/Text';
 const InscriptionTemplate = () => {
 
     return (
-        <FullScreenCardTemplate>
-            <InscriptionHeader direction="right" />
+        <div>
+            <FullScreenCardTemplate>
+                <InscriptionHeader direction="right" />
 
-            <Text
-                variant="error"
-                color="error"
-                className="my-6"
-            >
-                Los campos con asterisco (*) son obligatorios.
-            </Text>
+                <Text
+                    variant="error"
+                    color="error"
+                    className="my-6"
+                >
+                    Los campos con asterisco (*) son obligatorios.
+                </Text>
 
-            <FormInscription />
+                <FormInscription />
 
-        </FullScreenCardTemplate>
+            </FullScreenCardTemplate>
+        </div>
     )
 
 }

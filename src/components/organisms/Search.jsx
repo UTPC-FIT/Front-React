@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 
-const Search = ({ onSearch = () => { } }) => {
-    const [search, setSearch] = useState('');
+const Search = ({ onSearch = () => { }, value = '' }) => {
+    const [inputValue, setInputValue] = useState(value);
 
-    const handleSearch = () => {
-        onSearch(search);
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        handleSearch();
+        onSearch(inputValue); // Notifica al padre el término de búsqueda
+    };
 
-        setSearch('');
-        onSearch('');
+    const handleReset = () => {
+        setInputValue(''); // Limpia el input visualmente
+        onSearch(''); // Notifica al padre que se ha limpiado la búsqueda
     };
 
     return (
@@ -44,17 +46,18 @@ const Search = ({ onSearch = () => { } }) => {
                     </svg>
                 </button>
                 <input
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    value={inputValue}
+                    onChange={handleInputChange}
                     className="flex-grow bg-transparent text-[var(--color-neutral-gray-medium)] placeholder-[var(--color-neutral-gray-medium)] focus:outline-none px-2"
                     placeholder="Realiza tu búsqueda"
                     type="text"
                 />
                 <button
-                    type="reset"
+                    type="button"
                     aria-label="Restablecer"
-                    className={`text-[var(--color-neutral-gray-medium)] hover:text-color-accent-red ${search ? 'opacity-100 visible' : 'opacity-0 invisible'
+                    className={`text-[var(--color-neutral-gray-medium)] hover:text-color-accent-red ${inputValue ? 'opacity-100 visible' : 'opacity-0 invisible'
                         } transition-opacity`}
+                    onClick={handleReset}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

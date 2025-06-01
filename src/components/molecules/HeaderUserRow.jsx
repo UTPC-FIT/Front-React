@@ -28,7 +28,7 @@ const columnsHeader = [
 
 const HeaderUserRow = ({
     itemsColumnsHeader = columnsHeader,
-    className = "bg-[var(--color-primary)] px-8 py-16",
+    className = "bg-[var(--color-primary)] px-8 py-16 rounded-sm ",
 }) => {
     return (
         <thead className={`${className}`}>
