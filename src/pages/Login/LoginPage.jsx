@@ -14,7 +14,6 @@ const LoginPage = () => {
     const from = location.state?.from?.pathname || '/';
 
     useEffect(() => {
-        // Si ya está autenticado, redirigir
         if (!authLoading && user) {
             console.log('LoginPage: Usuario ya autenticado, redirigiendo a:', from);
             navigate(from, { replace: true });
@@ -34,7 +33,6 @@ const LoginPage = () => {
         }
     };
 
-    // Mostrar loading mientras se verifica la autenticación
     if (authLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -46,7 +44,6 @@ const LoginPage = () => {
         );
     }
 
-    // Si ya está autenticado, no mostrar nada (se redirigirá en el useEffect)
     if (user) {
         return null;
     }

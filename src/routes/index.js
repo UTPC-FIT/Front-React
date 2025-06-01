@@ -11,6 +11,6 @@ export const routes = [
     { path: '/', Component: HomePage },
     { path: '/login', Component: LoginPage },
     { path: '/callback', Component: CallbackPage },
-    { path: '/inscripcion', Component: InscriptionPage, Protected: Protected },
+    { path: '/inscription', Component: InscriptionPage, Protected: Protected },
     { path: '*', Component: NotFoundPage }
 ];

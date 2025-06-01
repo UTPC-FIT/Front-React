@@ -43,8 +43,7 @@ export const login = async () => {
     }
 
     if (keycloakInstance) {
-        // Sin especificar redirectUri, usará la URL actual
-        return keycloakInstance.login();
+        return keycloakInstance.login({ redirectUri: `${window.location.origin}/inscription` });
     } else {
         throw new Error('Keycloak no pudo ser inicializado');
     }
@@ -61,22 +60,14 @@ export const getToken = () => {
 };
 
 export const getUserInfo = () => {
-    console.log('getUserInfo called - keycloakInstance:', keycloakInstance);
-    console.log('keycloakInstance.authenticated:', keycloakInstance?.authenticated);
-    console.log('keycloakInstance.tokenParsed:', keycloakInstance?.tokenParsed);
-
     if (keycloakInstance?.authenticated) {
         const userInfo = {
             id_student: keycloakInstance.tokenParsed?.sub,
             username: keycloakInstance.tokenParsed?.preferred_username,
-            name: keycloakInstance.tokenParsed?.name,
             email: keycloakInstance.tokenParsed?.email,
-            role: keycloakInstance.tokenParsed?.realm_access?.roles || [],
-            age: keycloakInstance.tokenParsed?.age || 20
+            roles: keycloakInstance.tokenParsed?.realm_access?.roles || [],
         };
-        console.log('Returning user info:', userInfo);
         return userInfo;
     }
-    console.log('No authenticated user found');
     return null;
 };
