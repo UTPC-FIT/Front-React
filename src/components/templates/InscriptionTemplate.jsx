@@ -1,10 +1,12 @@
+import React from 'react';
+
 import FullScreenCardTemplate from '@templates/FullScreenCardTemplate';
 import InscriptionHeader from '@organisms/headers/InscriptionHeader';
 import FormInscription from '@organisms/forms/FormInscription';
 
 import Text from '@atoms/Text';
 
-const InscriptionPage = () => {
+const InscriptionTemplate = () => {
 
     return (
         <FullScreenCardTemplate>
@@ -25,4 +27,4 @@ const InscriptionPage = () => {
 
 }
 
-export default InscriptionPage;
+export default InscriptionTemplate;

@@ -8,14 +8,15 @@ const FullScreenCardTemplate = ({
     className = '',
     maxWidth = 'max-w-5xl',
     minHeight = 'min-h-[545px]',
-    fullHeightOnMobile = true
+    fullHeightOnMobile = true,
+    largeWidth = "60%"
 }) => {
     return (
         <div className={`
             min-h-screen w-full flex items-center justify-center p-4 ${backgroundScreenColor}`}>
             <div className={`
-                w-full ${maxWidth} ${minHeight} flex flex-col rounded-lg shadow-md ${backgroundColor} ${className}
-                md:w-[80%] lg:w-[70%] xl:w-[60%]
+                w-full flex flex-col rounded-lg shadow-md ${backgroundColor} ${className}
+                md:w-[90%] lg:w-[${largeWidth}] xl:w-[${largeWidth}] ${maxWidth} ${minHeight} 
                 p-8
                 ${fullHeightOnMobile ? 'sm:h-auto h-screen sm:rounded-lg rounded-none' : ''}
                 transition-all duration-300
@@ -32,6 +33,7 @@ FullScreenCardTemplate.propTypes = {
     className: PropTypes.string,
     maxWidth: PropTypes.string,
     minHeight: PropTypes.string,
+    minWidth: PropTypes.string,
     fullHeightOnMobile: PropTypes.bool
 };
 

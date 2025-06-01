@@ -10,7 +10,7 @@ const Text = ({
     const variants = {
         heading1: 'text-9xl font-bold',
         heading2: 'text-3xl font-semibold',
-        heading3: 'text-2xl font-semibold',
+        heading3: 'text-xl font-semibold',
         body: 'text-base',
         caption: 'text-sm',
         error: 'text-sm',

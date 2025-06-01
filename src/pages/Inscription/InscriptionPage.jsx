@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRequireAuth } from '@hooks/useRequireAuth';
 import InscriptionTemplate from '@templates/InscriptionTemplate';
+// import InscriptionTemplate from '@templates/InscriptionTemplate';
 
 import { getToken } from '@services/authService';
 
@@ -21,7 +22,7 @@ const InscriptionPage = () => {
         return null;
     }
 
-    return <InscriptionTemplate user={user} />;
+    return <InscriptionTemplate />;
 };
 
 export default InscriptionPage;
