@@ -18,3 +18,12 @@ export async function registerStudent(registrationData) {
         throw new ApiError(err.message, err.code || 500);
     }
 }
+
+export async function changeStatusToPending(idStudent) {
+    try {
+        const response = await api.putChangeStatusToPending(idStudent);
+        return response.data;
+    } catch (err) {
+        throw new ApiError(err.message, err.code || 500)
+    }
+}

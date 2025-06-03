@@ -31,6 +31,8 @@ export function useRegistration() {
         setError(null);
         try {
             const result = await service.registerStudent(registrationData);
+            const changeStatus = await service.changeStatusToPending(id_student);
+            console.log(changeStatus)
             setData(result);
             toast.success('Registro exitoso 🥳');
             return result;

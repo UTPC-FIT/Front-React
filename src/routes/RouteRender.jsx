@@ -17,7 +17,14 @@ export default function RouteRenderer() {
         <Suspense fallback={<RouteLoading />}>
             <Routes>
                 {routes.map((route, index) => {
-                    const { path, Component, Protected: ProtectedComponent, allowedRoles, forbiddenRoles } = route;
+                    const {
+                        path,
+                        Component,
+                        Protected: ProtectedComponent,
+                        allowedRoles,
+                        forbiddenRoles,
+                        requiredStatus
+                    } = route;
 
                     return (
                         <Route
@@ -28,6 +35,7 @@ export default function RouteRenderer() {
                                     <ProtectedComponent
                                         allowedRoles={allowedRoles || []}
                                         forbiddenRoles={forbiddenRoles || []}
+                                        requiredStatus={requiredStatus || null}
                                     >
                                         <Component />
                                     </ProtectedComponent>

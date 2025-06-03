@@ -11,6 +11,10 @@ const ValidateAttendancePage = lazy(() => import('@pages/Officials/ValidateAtten
 const ListTurnPage = lazy(() => import('@pages/Officials/ListTurnPage'));
 const AssignShcedulePage = lazy(() => import('@pages/Students/AssignSchedulePage'));
 
+// Status pages
+const PendingPage = lazy(() => import('@pages/Status/PendingPage'));
+const InactivePage = lazy(() => import('@pages/Status/InactivePage'));
+
 // Pages for role "officials"
 const OfficialsHomePage = lazy(() => import('@pages/Officials/HomePage'));
 
@@ -21,19 +25,32 @@ export const routes = [
     { path: '/callback', Component: CallbackPage },
     { path: '/schedule', Component: AssignShcedulePage },
 
-    // Student routes - require authentication and "student" role
+    // Status-specific routes (protected by status validation)
     {
         path: '/inscription',
         Component: InscriptionPage,
         Protected: Protected,
-        allowedRoles: ['student']
+        requiredStatus: 'unregister'
+    },
+    {
+        path: '/pending',
+        Component: PendingPage,
+        Protected: Protected,
+        requiredStatus: 'pending'
+    },
+    {
+        path: '/inactive',
+        Component: InactivePage,
+        Protected: Protected,
+        requiredStatus: 'inactive'
     },
 
-    // Officials routes - require authentication and "official" role
+    // Role-based routes (only for active users)
     {
         path: '/officials',
         Component: OfficialsHomePage,
         Protected: Protected,
+        requiredStatus: 'active',
         allowedRoles: ['official']
     },
     {
@@ -55,39 +72,41 @@ export const routes = [
         allowedRoles: ['official']
     },
 
-    // Examples with forbidden roles (blacklist)
-
-    // Example: Page accessible to everyone EXCEPT officials
-    // { 
-    //     path: '/student-only-area', 
-    //     Component: StudentOnlyArea, 
+    // Examples with forbidden roles (blacklist) - only for active users
+    // {
+    //     path: '/student-only-area',
+    //     Component: StudentOnlyArea,
     //     Protected: Protected,
+    //     requiredStatus: 'active',
     //     forbiddenRoles: ['official']
     // },
 
     // Example: Page forbidden for specific roles but open to others
-    // { 
-    //     path: '/general-access', 
-    //     Component: GeneralAccess, 
+    // {
+    //     path: '/general-access',
+    //     Component: GeneralAccess,
     //     Protected: Protected,
+    //     requiredStatus: 'active',
     //     forbiddenRoles: ['banned', 'suspended']
     // },
 
     // Example: Combining whitelist and blacklist
     // Page only for students, but not for suspended students
-    // { 
-    //     path: '/active-students-only', 
-    //     Component: ActiveStudentsOnly, 
+    // {
+    //     path: '/active-students-only',
+    //     Component: ActiveStudentsOnly,
     //     Protected: Protected,
+    //     requiredStatus: 'active',
     //     allowedRoles: ['student'],
     //     forbiddenRoles: ['suspended', 'inactive']
     // },
 
     // Example: Admin area - only admins, no regular users
-    // { 
-    //     path: '/admin', 
-    //     Component: AdminPanel, 
+    // {
+    //     path: '/admin',
+    //     Component: AdminPanel,
     //     Protected: Protected,
+    //     requiredStatus: 'active',
     //     allowedRoles: ['admin'],
     //     forbiddenRoles: ['student', 'official'] // Extra security
     // },
