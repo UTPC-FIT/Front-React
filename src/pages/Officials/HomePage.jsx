@@ -5,58 +5,26 @@ import OfficialTemplate from '@templates/OfficialTemplate';
 import TableStudentsHeader from '@organisms/headers/TableStudentsHeader';
 import TableStudentsTemplate from '@templates/TableStudentsTemplate';
 
-const initialStudentsData = [
-    {
-        studentId: "123",
-        firstName: "John",
-        lastName: "Garzón",
-        studentCode: "202212048",
-        email: "john.garzon@uptc.edu.co",
-        status: "active" // active, inactive, pending
-    },
-    {
-        studentId: "1234",
-        firstName: "Jane",
-        lastName: "Doe",
-        studentCode: "202212049",
-        email: "jane.doe@uptc.edu.co",
-        status: "inactive"
-    },
-    {
-        studentId: "12345",
-        firstName: "Alice",
-        lastName: "Smith",
-        studentCode: "202212050",
-        email: "alice.smith@uptc.edu.co",
-        status: "pending"
-    },
-    {
-        studentId: "123456",
-        firstName: "Bob",
-        lastName: "Johnson",
-        studentCode: "202212051",
-        email: "bob.johnson@uptc.edu.co",
-        status: "active"
-    },
-    // ... agrega más estudiantes aquí con la misma estructura
-];
+import useStudents from '@hooks/useStudents';
 
 const HomePage = () => {
+    const { students, loading, error } = useStudents();
     const [searchTerm, setSearchTerm] = useState('');
-    const [filterStatus, setFilterStatus] = useState(''); // 'active', 'inactive', 'pending', o '' para todos
+    const [filterStatus, setFilterStatus] = useState('');
 
     // Lógica de filtrado y búsqueda combinada, optimizada con useMemo
     const filteredAndSearchedStudents = useMemo(() => {
-        let currentStudents = [...initialStudentsData]; // Trabaja con una copia de los datos originales
+        if (!students) return [];
+
+        let currentStudents = [...students];
 
         // Aplicar lógica de búsqueda
         if (searchTerm) {
             const term = searchTerm.toLowerCase();
             currentStudents = currentStudents.filter(student => {
-                // Accede directamente a las propiedades de la estructura de estudiantes
                 const firstName = student.firstName.toLowerCase();
                 const lastName = student.lastName.toLowerCase();
-                const code = student.studentCode ? student.studentCode.toLowerCase() : ''; // `studentCode` puede no existir
+                const code = student.studentCode ? student.studentCode.toLowerCase() : '';
 
                 return (
                     firstName.includes(term) ||
@@ -74,9 +42,8 @@ const HomePage = () => {
         }
 
         return currentStudents;
-    }, [searchTerm, filterStatus]); // Se recalcula cuando searchTerm o filterStatus cambian
+    }, [students, searchTerm, filterStatus]);
 
-    // Funciones para pasar a los componentes hijos
     const handleSearch = (term) => {
         setSearchTerm(term);
     };
@@ -84,6 +51,9 @@ const HomePage = () => {
     const handleFilterChange = (status) => {
         setFilterStatus(status);
     };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <OfficialTemplate
@@ -95,7 +65,7 @@ const HomePage = () => {
             <TableStudentsHeader
                 onSearch={handleSearch}
                 onFilterChange={handleFilterChange}
-                currentFilter={filterStatus} // Pasa el filtro actual para posibles resaltados
+                currentFilter={filterStatus}
             />
             <TableStudentsTemplate students={filteredAndSearchedStudents} />
         </OfficialTemplate>

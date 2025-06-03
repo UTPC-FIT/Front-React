@@ -13,6 +13,7 @@ const InactivePage = lazy(() => import('@pages/Status/InactivePage'));
 
 // Pages for role "officials"
 const OfficialsHomePage = lazy(() => import('@pages/Officials/HomePage'));
+const OfficialsStudentPage = lazy(() => import('@pages/Officials/StudentPage'));
 
 export const routes = [
     // Public routes
@@ -44,6 +45,13 @@ export const routes = [
     {
         path: '/officials',
         Component: OfficialsHomePage,
+        Protected: Protected,
+        requiredStatus: 'active',
+        allowedRoles: ['official']
+    },
+    {
+        path: '/officials/student/:studentId',
+        Component: OfficialsStudentPage,
         Protected: Protected,
         requiredStatus: 'active',
         allowedRoles: ['official']

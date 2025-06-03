@@ -18,7 +18,7 @@ const Button = ({
         secondary: 'bg-[var(--color-neutral-gray-light)] text-[var(--color-neutral-gray-dark)] hover:bg-[var(--color-neutral-gray-medium)]',
         danger: 'bg-[var(--color-accent-red)] hover:bg-[var(--color-accent-red-light)] text-[var(--color-neutral-white)]',
         success: 'bg-[var(--color-accent-green)] hover:bg-[var(--color-accent-green-light)] text-[var(--color-neutral-white)]',
-        outline: 'border-2 border-[var(--color-primary-medium)] text-[var(--color-primary-medium)] hover:bg-[var(--color-primary-light)]',
+        outline: 'border-2 border-[var(--color-primary-medium)] text-[var(--color-primary-medium)] hover:bg-[var(--color-primary-light)] ',
     };
 
     const sizes = {
