@@ -8,3 +8,11 @@ export function postStudentRegistration(formData) {
         headers: { 'Content-Type': 'multipart/form-data' }
     });
 }
+
+export function putChangeStatusToPending(id_student) {
+    return apiClient.put(`/bienestar/users/${id_student}/status`, {
+        status: "pending"
+    }, {
+        headers: { 'Content-Type': 'application/json' }
+    })
+}

@@ -37,7 +37,7 @@ const HeaderUserRow = ({
                     <th key={`${item.title}${index}`}>
                         <TitleWithIcon
                             IconComponent={item.IconComponent}
-                            size="small"
+                            size="body"
                         >
                             {item?.title.charAt(0).toUpperCase()}
                             {item?.title.slice(1)}
