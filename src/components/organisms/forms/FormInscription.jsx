@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { FiUser, FiPhone, FiUsers, FiSend } from "react-icons/fi";
 
@@ -11,6 +12,7 @@ import { useRegistration } from '@hooks/useRegistration';
 
 
 const FormInscription = ({ age = 20 }) => {
+    const navigate = useNavigate();
     const { register, loading, error, data } = useRegistration();
     const [formData, setFormData] = useState({
         consent_document: null,
@@ -90,7 +92,6 @@ const FormInscription = ({ age = 20 }) => {
             e.preventDefault();
             try {
                 const resp = await register(formData);
-                console.log('Registro OK:', resp);
 
                 setFormData({
                     consent_document: null,
@@ -100,6 +101,7 @@ const FormInscription = ({ age = 20 }) => {
                     emergency_contact_relationship: ''
                 });
                 setErrors({});
+                navigate("/pending")
             } catch (err) {
                 console.error('Error al registrar:', err);
             }
@@ -107,80 +109,89 @@ const FormInscription = ({ age = 20 }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            {/* Emergency Contact Section */}
-            <div className="bg-gray-50 p-6 rounded-lg mb-6 border border-gray-200">
-                <h3 className="text-xl font-semibold mb-6 text-[var(--color-neutral-gray-blue)] border-b pb-3">
-                    Contacto de Emergencia
-                </h3>
+        <>
+            {loading && (
+                <div className="text-center mb-4">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                    <p className="text-gray-600 mt-2">Procesando inscripción...</p>
+                </div>
+            )}
 
-                <div className="mb-4">
-                    <InputWithLabel
-                        label="Nombre Completo (*)"
-                        name="emergency_contact_name"
-                        value={formData.emergency_contact_name}
+            <form onSubmit={handleSubmit}>
+                {/* Emergency Contact Section */}
+                <div className="bg-gray-50 p-6 rounded-lg mb-6 border border-gray-200">
+                    <h3 className="text-xl font-semibold mb-6 text-[var(--color-neutral-gray-blue)] border-b pb-3">
+                        Contacto de Emergencia
+                    </h3>
+
+                    <div className="mb-4">
+                        <InputWithLabel
+                            label="Nombre Completo (*)"
+                            name="emergency_contact_name"
+                            value={formData.emergency_contact_name}
+                            onChange={handleInputChange}
+                            placeholder="Nombre del contacto de emergencia"
+                            icon={<FiUser />}
+                            variant="primary"
+                            error={errors.emergency_contact_name}
+                            required
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <InputWithLabel
+                            label="Número de Contacto (*)"
+                            name="emergency_contact_phone"
+                            value={formData.emergency_contact_phone}
+                            onChange={handleInputChange}
+                            placeholder="Número de contacto"
+                            icon={<FiPhone />}
+                            variant="primary"
+                            error={errors.emergency_contact_phone}
+                            required
+                        />
+                    </div>
+
+                    <InputSelection
+                        label="Parentesco (*)"
+                        name="emergency_contact_relationship"
+                        value={formData.emergency_contact_relationship}
                         onChange={handleInputChange}
-                        placeholder="Nombre del contacto de emergencia"
-                        icon={<FiUser />}
+                        placeholder="Seleccione el parentesco"
+                        icon={<FiUsers />}
                         variant="primary"
-                        error={errors.emergency_contact_name}
-                        required
+                        error={errors.emergency_contact_relationship}
+                        options={[
+                            { value: "padre", label: "Padre" },
+                            { value: "madre", label: "Madre" },
+                            { value: "hermano", label: "Hermano/a" },
+                            { value: "conyuge", label: "Cónyuge" },
+                            { value: "otro", label: "Otro" }
+                        ]}
                     />
                 </div>
 
-                <div className="mb-4">
-                    <InputWithLabel
-                        label="Número de Contacto (*)"
-                        name="emergency_contact_phone"
-                        value={formData.emergency_contact_phone}
-                        onChange={handleInputChange}
-                        placeholder="Número de contacto"
-                        icon={<FiPhone />}
-                        variant="primary"
-                        error={errors.emergency_contact_phone}
-                        required
-                    />
-                </div>
-
-                <InputSelection
-                    label="Parentesco (*)"
-                    name="emergency_contact_relationship"
-                    value={formData.emergency_contact_relationship}
-                    onChange={handleInputChange}
-                    placeholder="Seleccione el parentesco"
-                    icon={<FiUsers />}
-                    variant="primary"
-                    error={errors.emergency_contact_relationship}
-                    options={[
-                        { value: "padre", label: "Padre" },
-                        { value: "madre", label: "Madre" },
-                        { value: "hermano", label: "Hermano/a" },
-                        { value: "conyuge", label: "Cónyuge" },
-                        { value: "otro", label: "Otro" }
-                    ]}
+                {/* Document Upload Section */}
+                <UploadFileRegister
+                    age={age}
+                    parentalAuthorization={formData.parental_authorization}
+                    informedConsent={formData.consent_document}
+                    handleFileChange={handleFileChange}
+                    errorMessage={age >= 18 ? errors.consent_document : errors.parental_authorization}
                 />
-            </div>
 
-            {/* Document Upload Section */}
-            <UploadFileRegister
-                age={age}
-                parentalAuthorization={formData.parental_authorization}
-                informedConsent={formData.consent_document}
-                handleFileChange={handleFileChange}
-                errorMessage={age >= 18 ? errors.consent_document : errors.parental_authorization}
-            />
-
-            <div className='w-full flex justify-center'>
-                <ButtonWithIcon
-                    type="submit"
-                    variant="primary"
-                    IconComponent={FiSend}
-                    iconPosition="right"
-                >
-                    Enviar Inscripción
-                </ButtonWithIcon>
-            </div>
-        </form>
+                <div className='w-full flex justify-center'>
+                    <ButtonWithIcon
+                        type="submit"
+                        variant="primary"
+                        IconComponent={FiSend}
+                        iconPosition="right"
+                    >
+                        Enviar Inscripción
+                    </ButtonWithIcon>
+                </div>
+            </form>
+        </>
     );
 };
 
