@@ -1,8 +1,8 @@
+// @hooks/useStudents.js
 import { useState, useEffect } from 'react';
-import { getStudents, getStudentInscriptionInfoById, getStudentById, changeStatusStudent } from '@/services/studentsService';
+import { getStudents, getStudentInscriptionInfoById, getStudentById, changeStatusStudent, getConsentPdf } from '@/services/studentsService'; // ✨ Importa getConsentPdf ✨
 
 import { ApiError } from '@/utils/ApiError';
-
 import { toast } from 'react-toastify';
 
 export default function useStudents() {
@@ -67,11 +67,28 @@ export default function useStudents() {
         }
     };
 
+    const getStudentConsentPdf = async (studentId) => {
+        setLoading(true); // O puedes usar un loading específico para el PDF
+        try {
+            const pdfBlob = await getConsentPdf(studentId);
+            // Crea una URL para el Blob que se puede usar en un <iframe>
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+            return pdfUrl;
+        } catch (error) {
+            console.error('Error fetching consent PDF:', error);
+            toast.error("No se pudo cargar el documento de consentimiento.");
+            return null; // Retorna null en caso de error
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return {
         students,
         loading,
         error,
         getFullStudent,
-        changeRoleStudent
+        changeRoleStudent,
+        getStudentConsentPdf // ✨ Exporta la nueva función ✨
     };
 }

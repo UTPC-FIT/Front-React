@@ -1,3 +1,4 @@
+// @api/endpoints/studentsApi.js
 import { apiClient } from '@api/client';
 
 export function getStudents() {
@@ -18,4 +19,10 @@ export function putChangeStatusStudent({ studentId, newStatus }) {
     }, {
         headers: { 'Content-Type': 'application/json' }
     })
+}
+
+export function getConsentPdfByStudentId(studentId) {
+    return apiClient.get(`/inscription/consent/${studentId}`, {
+        responseType: 'blob'
+    });
 }

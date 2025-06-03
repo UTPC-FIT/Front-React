@@ -52,7 +52,22 @@ const HomePage = () => {
         setFilterStatus(status);
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return (
+        <OfficialTemplate>
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center p-8 bg-white rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <div className="relative flex items-center justify-center mb-6">
+                        <div className="absolute animate-spin rounded-full h-16 w-16 border-4 border-[var(--color-background-dark)]">
+                            <div className="absolute inset-0 rounded-full border-4 border-t-[var(--color-primary)] border-r-transparent border-b-transparent border-l-transparent"></div>
+                        </div>
+                    </div>
+                    <p className="text-[var(--color-neutral-gray-blue)] font-medium">
+                        Cargando estudiantes...
+                    </p>
+                </div>
+            </div>
+        </OfficialTemplate>
+    );
     if (error) return <div>Error: {error}</div>;
 
     return (

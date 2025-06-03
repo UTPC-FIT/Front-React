@@ -1,3 +1,4 @@
+// @services/studentsService.js
 import * as api from '@/api/endpoints/studentsApi';
 import { ApiError } from '@/utils/ApiError';
 import { studentsDto, studentInscriptionInfoDto, studentDto } from '@/dtos/studentsDto';
@@ -58,5 +59,19 @@ export async function changeStatusStudent({ studentId, newStatus }) {
         return response.data;
     } catch (err) {
         throw new ApiError(err.message, err.code || 500)
+    }
+}
+
+export async function getConsentPdf(studentId) {
+    try {
+        const response = await api.getConsentPdfByStudentId(studentId);
+        // La respuesta.data ya es un Blob debido a responseType: 'blob'
+        return response.data;
+    } catch (err) {
+        if (err.response) {
+            const { status, data } = err.response;
+            throw new ApiError(data.message || 'Error al obtener el PDF del consentimiento', status, data);
+        }
+        throw new ApiError(err.message || 'Error desconocido al obtener el PDF', err.code || 500);
     }
 }

@@ -1,6 +1,7 @@
+// StudentPage.js
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FiUser, FiMail, FiPhone, FiUsers, FiFileText, FiCalendar, FiArrowLeft, FiDownload, FiEdit3, FiCheck, FiX } from "react-icons/fi";
+import { FiUser, FiMail, FiPhone, FiUsers, FiFileText, FiCalendar, FiArrowLeft, FiDownload, FiEdit3, FiCheck, FiX, FiEye } from "react-icons/fi"; // ✨ Agrega FiEye para el ícono de ver ✨
 
 import Text from '@atoms/Text';
 import StatusBadge from '@molecules/StatusBadge';
@@ -20,10 +21,12 @@ export default function StudentPage() {
     const [isEditingStatus, setIsEditingStatus] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState('');
     const [isChangingStatus, setIsChangingStatus] = useState(false);
+    const [pdfUrl, setPdfUrl] = useState(null); // ✨ Nuevo estado para la URL del PDF ✨
+    const [showPdfViewer, setShowPdfViewer] = useState(false); // ✨ Nuevo estado para controlar la visibilidad del visor ✨
 
     const { studentId } = useParams();
     const navigate = useNavigate();
-    const { getFullStudent, loading, changeRoleStudent } = useStudents();
+    const { getFullStudent, loading, changeRoleStudent, getStudentConsentPdf } = useStudents(); // ✨ Importa getStudentConsentPdf ✨
 
     useEffect(() => {
         const fetchStudent = async () => {
@@ -37,7 +40,7 @@ export default function StudentPage() {
         };
 
         fetchStudent();
-    }, []);
+    }, [studentId]); // Agrega studentId como dependencia para re-fetch si cambia
 
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
@@ -59,8 +62,29 @@ export default function StudentPage() {
     };
 
     const handleDownloadConsent = () => {
+        // Esta función podría usarse para la descarga directa si el backend lo permite
+        // Pero para la visualización en la misma página, usaremos handleViewConsent
         if (student?.consent?.fileUrl) {
             window.open(student.consent.fileUrl, '_blank');
+        }
+    };
+
+    // ✨ Nueva función para ver el PDF ✨
+    const handleViewConsent = async () => {
+        if (studentId) {
+            const url = await getStudentConsentPdf(studentId);
+            if (url) {
+                setPdfUrl(url);
+                setShowPdfViewer(true);
+            }
+        }
+    };
+
+    const handleClosePdfViewer = () => {
+        setShowPdfViewer(false);
+        if (pdfUrl) {
+            URL.revokeObjectURL(pdfUrl); // Libera la URL del Blob para evitar fugas de memoria
+            setPdfUrl(null);
         }
     };
 
@@ -150,7 +174,7 @@ export default function StudentPage() {
                         </div>
                     </div>
 
-                    {/* Main Info Card */}
+                    {/* Main Info Card (código omitido por brevedad, es el mismo que tienes) */}
                     <div className="bg-white rounded-lg shadow-md p-6 mb-6 border border-gray-200">
                         <div className="flex items-start justify-between mb-6">
                             <div className="flex items-center space-x-4">
@@ -252,7 +276,7 @@ export default function StudentPage() {
                         )}
                     </div>
 
-                    {/* Emergency Contacts */}
+                    {/* Emergency Contacts (código omitido por brevedad, es el mismo que tienes) */}
                     <div className="bg-white rounded-lg shadow-md p-6 mb-6 border border-gray-200">
                         <h2 className="text-xl font-semibold mb-4 text-[var(--color-neutral-gray-blue)] border-b pb-3">
                             <FiUsers className="inline w-5 h-5 mr-2" />
@@ -341,18 +365,27 @@ export default function StudentPage() {
                                         </div>
                                     )}
 
-                                    {student.consent.fileUrl && (
-                                        <div className="mt-4 pt-4 border-t border-gray-200">
-                                            <ButtonWithIcon
-                                                variant="secondary"
-                                                IconComponent={FiDownload}
-                                                iconPosition="left"
-                                                onClick={handleDownloadConsent}
-                                            >
-                                                Descargar Documento de Consentimiento
-                                            </ButtonWithIcon>
-                                        </div>
-                                    )}
+                                    {/* ✨ Botones para ver y descargar el PDF ✨ */}
+                                    <div className="mt-4 pt-4 border-t border-gray-200 flex flex-col sm:flex-row gap-2">
+                                        <ButtonWithIcon
+                                            variant="secondary"
+                                            IconComponent={FiEye} // Icono para ver
+                                            iconPosition="left"
+                                            onClick={handleViewConsent}
+                                            disabled={loading} // Deshabilitar si se está cargando el PDF
+                                        >
+                                            Ver Documento de Consentimiento
+                                        </ButtonWithIcon>
+                                        {/* <ButtonWithIcon
+                                            variant="tertiary" // Un estilo diferente para la descarga
+                                            IconComponent={FiDownload}
+                                            iconPosition="left"
+                                            onClick={handleDownloadConsent}
+                                            disabled={!student.consent.fileUrl} // Deshabilitar si no hay URL de descarga
+                                        >
+                                            Descargar
+                                        </ButtonWithIcon> */}
+                                    </div>
                                 </div>
                             </div>
                         ) : (
@@ -363,6 +396,37 @@ export default function StudentPage() {
                         )}
                     </div>
                 </div>
+
+                {/* ✨ Visor de PDF (Modal o Componente overlay) ✨ */}
+                {showPdfViewer && pdfUrl && (
+                    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+                        <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[90vh] flex flex-col">
+                            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+                                <h3 className="text-lg font-semibold">Documento de Consentimiento</h3>
+                                <button
+                                    onClick={handleClosePdfViewer}
+                                    className="p-2 rounded-full hover:bg-gray-200 transition-colors"
+                                    title="Cerrar"
+                                >
+                                    <FiX className="w-6 h-6 text-gray-600" />
+                                </button>
+                            </div>
+                            <div className="flex-grow overflow-hidden">
+                                {/* Usa el <iframe> para incrustar el PDF. Asegúrate de que la URL sea un Blob URL */}
+                                <iframe
+                                    src={pdfUrl}
+                                    title="Consentimiento del Estudiante"
+                                    className="w-full h-full border-0"
+                                    type="application/pdf"
+                                    allowFullScreen
+                                >
+                                    Tu navegador no soporta la visualización de PDFs.
+                                    <a href={pdfUrl} target="_blank" rel="noopener noreferrer">Descarga el PDF aquí</a>.
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </OfficialTemplate>
     );
