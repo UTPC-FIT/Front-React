@@ -10,6 +10,7 @@ const CreateTurnPage = lazy(() => import('@pages/Officials/CreateTurnPage'));
 const ValidateAttendancePage = lazy(() => import('@pages/Officials/ValidateAttendancePage'));
 const ListTurnPage = lazy(() => import('@pages/Officials/ListTurnPage'));
 const AssignShcedulePage = lazy(() => import('@pages/Students/AssignSchedulePage'));
+const Friendship = lazy(() => import('@pages/Students/FriendShip'));
 
 // Status pages
 const PendingPage = lazy(() => import('@pages/Status/PendingPage'));
@@ -78,6 +79,13 @@ export const routes = [
         Protected: Protected,
         requiredStatus: 'active',
         allowedRoles: ['official']
+    },
+    {   
+        path: '/students/friendship',
+        Component: Friendship, 
+        Protected: Protected,
+        requiredStatus: 'active',
+        allowedRoles: ['student']
     },
 
     // Examples with forbidden roles (blacklist) - only for active users
